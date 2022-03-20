@@ -94,7 +94,7 @@ namespace Encoder.Services
                 bits += 6;
                 bool fTerminate = '=' == input[j];
                 if (!fTerminate)
-                    reflex += IndexOf(input[j]);
+                    reflex += Array.IndexOf(_transCode, input[j]);
     
                 while (bits >= 8)
                 {
@@ -110,15 +110,6 @@ namespace Encoder.Services
             }
 
             return new string(output);
-        }
-
-        private int IndexOf(char ch)
-        {
-            int index;
-            for (index = 0; index < _transcode.Length; index++)
-                if (ch == _transcode[index])
-                    break;    
-            return index;
         }
     }
 }
