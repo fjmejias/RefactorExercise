@@ -1,5 +1,5 @@
-﻿using System;
-using Encoder.Interfaces;
+﻿using Encoder.Interfaces;
+using System;
 
 namespace Encoder.Services
 {
