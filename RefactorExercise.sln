@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Question1", "Question1\Ques
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Encoder", "Encoder\Encoder.csproj", "{228FC467-7A9C-4BE7-8D3D-B179DA9BAE57}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Encoder.UnitTest", "Encoder.UnitTest\Encoder.UnitTest.csproj", "{3B114AF5-A61A-4930-9168-112F2947FB3D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{228FC467-7A9C-4BE7-8D3D-B179DA9BAE57}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{228FC467-7A9C-4BE7-8D3D-B179DA9BAE57}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{228FC467-7A9C-4BE7-8D3D-B179DA9BAE57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B114AF5-A61A-4930-9168-112F2947FB3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B114AF5-A61A-4930-9168-112F2947FB3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B114AF5-A61A-4930-9168-112F2947FB3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B114AF5-A61A-4930-9168-112F2947FB3D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
