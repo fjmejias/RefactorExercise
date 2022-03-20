@@ -1,6 +1,7 @@
 ﻿using Encoder.Interfaces;
 using Encoder.Services;
 using System;
+using Unity;
 
 namespace Question1
 {
@@ -10,7 +11,7 @@ namespace Question1
         {
             string test_string = "This is a test string";
 
-            IEncodeService encoder = new EncodeService();
+            var encoder = InitContainer().Resolve<IEncodeService>();
 
             var encodedText = encoder.Encode(test_string);
             Console.WriteLine("{0} --> {1}\n", test_string, new string(encodedText));
@@ -18,15 +19,15 @@ namespace Question1
             var decodedText = encoder.Decode(encodedText);
             Console.WriteLine("{0} --> {1}\n", encodedText, new string(decodedText));
 
-            var compare = string.CompareOrdinal(test_string, decodedText);
-            if (Convert.ToBoolean(compare))
-            {
-                Console.WriteLine("Test succeeded");
-            }
-            else
-            {
-                Console.WriteLine("Test failed");    
-            }
+            Console.WriteLine(string.CompareOrdinal(test_string, decodedText) == 0 ? "Test succeeded" : "Test failed");
+        }
+
+        private static UnityContainer InitContainer()
+        {
+            var container = new UnityContainer();
+            container.RegisterType<IEncodeService, EncodeService>();
+
+            return container;
         }
     }
 }
