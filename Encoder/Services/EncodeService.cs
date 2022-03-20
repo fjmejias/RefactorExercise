@@ -88,11 +88,12 @@ namespace Encoder.Services
             int c = 0;
             int bits = 0;
             int reflex = 0;
-            for (int j = 0; j < l; j++)
+            bool fTerminate = false;
+            for (int j = 0; j < l && !fTerminate; j++)
             {
                 reflex <<= 6;
                 bits += 6;
-                bool fTerminate = '=' == input[j];
+                fTerminate = '=' == input[j];
                 if (!fTerminate)
                     reflex += Array.IndexOf(_transCode, input[j]);
     
@@ -104,9 +105,6 @@ namespace Encoder.Services
                     reflex &= invert;
                     bits -= 8;
                 }
- 
-                if (fTerminate)
-                    break;
             }
 
             return new string(output);
