@@ -37,12 +37,7 @@ namespace Encoder.Services
         {
             int l = input.Length;
             int cb = (l / 3 + (Convert.ToBoolean(l % 3) ? 1 : 0)) * 4;
-
-            char[] output = new char[cb];
-            for (int i = 0; i < cb; i++)
-            {
-                output[i] = EqualChar;
-            }
+            char[] output = Enumerable.Repeat(EqualChar, cb).ToArray();
 
             int c = 0;
             int reflex = 0;
