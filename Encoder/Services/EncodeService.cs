@@ -5,30 +5,30 @@ namespace Encoder.Services
 {
     public class EncodeService : IEncodeService
     {
-        private readonly char[] _transcode;
+        private readonly char[] _transCode;
 
         public EncodeService()
         {
-            _transcode = InitTranscode();
+            _transCode = InitTransCode();
         }
 
-        private char[] InitTranscode()
+        private char[] InitTransCode()
         {                    
-            var transcode = new char[65];
+            var transCode = new char[65];
             for (int i = 0; i < 64; i++)  
             {    
-                transcode[i] = (char)('A' + i);
+                transCode[i] = (char)('A' + i);
                 if (i > 25)
-                    transcode[i] = (char)(transcode[i] + 6);
+                    transCode[i] = (char)(transCode[i] + 6);
 
                 if (i > 51)
-                    transcode[i] = (char)(transcode[i] - 0x4b);
+                    transCode[i] = (char)(transCode[i] - 0x4b);
             }
-            transcode[62] = '+';
-            transcode[63] = '/';            
-            transcode[64] = '=';
+            transCode[62] = '+';
+            transCode[63] = '/';
+            transCode[64] = '=';
 
-            return transcode;
+            return transCode;
         }
 
         public string Encode(string input)
@@ -57,7 +57,7 @@ namespace Encoder.Services
                 while (mask >= s)
                 {
                     int pivot =  (reflex & mask) >> x;
-                    output[c++] = _transcode[pivot];
+                    output[c++] = _transCode[pivot];
                     int invert = ~mask;
                     reflex &= invert;
                     mask >>= 6;
@@ -69,15 +69,15 @@ namespace Encoder.Services
             {
                 case 1:
                     reflex <<= 4;
-                    output[c] = _transcode[reflex];
+                    output[c] = _transCode[reflex];
                     break;
                 case 2:
                     reflex <<= 2;
-                    output[c] = _transcode[reflex];
+                    output[c] = _transCode[reflex];
                     break;
             }
 
-            return new string( output );
+            return new string(output);
         }
 
         public string Decode(string input)
@@ -108,8 +108,8 @@ namespace Encoder.Services
                 if (fTerminate)
                     break;
             }
-            
-            return new string( output );                    
+
+            return new string(output);
         }
 
         private int IndexOf(char ch)
