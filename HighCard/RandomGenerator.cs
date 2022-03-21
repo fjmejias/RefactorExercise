@@ -12,9 +12,9 @@ namespace HighCard
             _rnd = new Random(DateTime.Now.Millisecond);
         }
 
-        public int Next()
+        public int Next(int maxValue)
         {
-            return _rnd.Next();
+            return _rnd.Next(maxValue);
         }
     }
 }
