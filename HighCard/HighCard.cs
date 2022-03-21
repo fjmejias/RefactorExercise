@@ -5,19 +5,19 @@ namespace HighCard
 {
     public class HighCard : IHighCard
     {
-        private readonly Random _rnd;
+        private readonly IRandomGenerator _randomGenerator;
 
-        public HighCard()
+        public HighCard(IRandomGenerator randomGenerator)
         {
-            _rnd = new Random(DateTime.Now.Millisecond);
+            _randomGenerator = randomGenerator ?? throw new ArgumentNullException(nameof(randomGenerator));
         }
 
         public bool Play()
         {
-            int i = _rnd.Next() % 52 + 1;
-            int j = _rnd.Next() % 52 + 1;
+            int a = _randomGenerator.Next() % 52 + 1;
+            int b = _randomGenerator.Next() % 52 + 1;
 
-            return i < j;
+            return a < b;
         }
     }
 }
