@@ -32,8 +32,8 @@ namespace HighCard.UnitTest
             Assert.IsNotNull(result.PlayerA);
             Assert.IsNotNull(result.PlayerB);
             Assert.AreEqual(GameResult.PlayerWins, result.GameResult);
-            Assert.IsTrue(result.PlayerA.Victory);
-            Assert.IsFalse(result.PlayerB.Victory);
+            Assert.IsTrue(result.PlayerA.Winner);
+            Assert.IsFalse(result.PlayerB.Winner);
         }
 
         [Test]
@@ -50,8 +50,8 @@ namespace HighCard.UnitTest
             Assert.IsNotNull(result.PlayerA);
             Assert.IsNotNull(result.PlayerB);
             Assert.AreEqual(GameResult.PlayerWins, result.GameResult);
-            Assert.IsFalse(result.PlayerA.Victory);
-            Assert.IsTrue(result.PlayerB.Victory);
+            Assert.IsFalse(result.PlayerA.Winner);
+            Assert.IsTrue(result.PlayerB.Winner);
         }
 
         [Test]
@@ -68,8 +68,8 @@ namespace HighCard.UnitTest
             Assert.IsNotNull(result.PlayerA);
             Assert.IsNotNull(result.PlayerB);
             Assert.AreEqual(GameResult.Tie, result.GameResult);
-            Assert.IsFalse(result.PlayerA.Victory);
-            Assert.IsFalse(result.PlayerB.Victory);
+            Assert.IsFalse(result.PlayerA.Winner);
+            Assert.IsFalse(result.PlayerB.Winner);
         }
     }
 }

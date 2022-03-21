@@ -63,8 +63,8 @@ namespace HighCard
             if (playerA.PlayingCard.Number != playerB.PlayingCard.Number)
             {
                 game.GameResult = GameResult.PlayerWins;
-                playerA.Victory = playerA.PlayingCard.Number > playerB.PlayingCard.Number;
-                playerB.Victory = playerA.PlayingCard.Number < playerB.PlayingCard.Number;
+                playerA.Winner = playerA.PlayingCard.Number > playerB.PlayingCard.Number;
+                playerB.Winner = playerA.PlayingCard.Number < playerB.PlayingCard.Number;
             }
         }
 
