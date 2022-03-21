@@ -67,6 +67,12 @@ namespace HighCard
                 playerA.Winner = playerA.PlayingCard.Number > playerB.PlayingCard.Number;
                 playerB.Winner = playerA.PlayingCard.Number < playerB.PlayingCard.Number;
             }
+            else if(playerA.PlayingCard.Suit != playerB.PlayingCard.Suit)
+            {
+                game.GameResult = GameResult.PlayerWins;
+                playerA.Winner = playerA.PlayingCard.Suit > playerB.PlayingCard.Suit;
+                playerB.Winner = playerA.PlayingCard.Suit < playerB.PlayingCard.Suit;
+            }
         }
 
         private bool CanPlay(Player playerA, Player playerB)

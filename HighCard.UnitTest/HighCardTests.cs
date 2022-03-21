@@ -58,11 +58,15 @@ namespace HighCard.UnitTest
             Assert.IsTrue(result.PlayerB.Winner);
         }
 
-        [Test]
-        public void Given_PlayerA_Equal_To_PlayerB_When_Play_Then_Tie()
+        [TestCase(Suits.Clubs, Suits.Clubs)]
+        [TestCase(Suits.Diamonds, Suits.Diamonds)]
+        [TestCase(Suits.Hearts, Suits.Hearts)]
+        [TestCase(Suits.Spades, Suits.Spades)]
+        public void Given_PlayerA_Value_And_Suit_Equal_To_PlayerB_AValue_And_Suit_When_Play_Then_Tie(Suits suitA, Suits suitB)
         {
             // given
             _randomGeneratorMock.SetupSequence(r => r.Next(It.IsAny<int>())).Returns(4).Returns(4);
+            _randomGeneratorMock.SetupSequence(r => r.Next(Card.SuitsNumber)).Returns((int)suitA).Returns((int)suitB);
 
             // when
             var result = _sut.Play();
@@ -74,6 +78,36 @@ namespace HighCard.UnitTest
             Assert.AreEqual(GameResult.Tie, result.GameResult);
             Assert.IsFalse(result.PlayerA.Winner);
             Assert.IsFalse(result.PlayerB.Winner);
+        }
+
+        [TestCase(Suits.Hearts, Suits.Diamonds, true)]
+        [TestCase(Suits.Hearts, Suits.Clubs, true)]
+        [TestCase(Suits.Hearts, Suits.Spades, true)]
+        [TestCase(Suits.Diamonds, Suits.Hearts, false)]
+        [TestCase(Suits.Diamonds, Suits.Clubs, true)]
+        [TestCase(Suits.Diamonds, Suits.Spades, true)]
+        [TestCase(Suits.Clubs, Suits.Hearts, false)]
+        [TestCase(Suits.Clubs, Suits.Diamonds, false)]
+        [TestCase(Suits.Clubs, Suits.Spades, true)]
+        [TestCase(Suits.Spades, Suits.Hearts, false)]
+        [TestCase(Suits.Spades, Suits.Diamonds, false)]
+        [TestCase(Suits.Spades, Suits.Clubs, false)]
+        public void Given_PlayerA_Value_Equal_To_PlayerB_Value_But_Different_Suit_When_Play_Then_Expected_Winner(Suits suitA, Suits suitB, bool isPlayerAWinner)
+        {
+            // given
+            _randomGeneratorMock.SetupSequence(r => r.Next(It.IsAny<int>())).Returns(4).Returns(4);
+            _randomGeneratorMock.SetupSequence(r => r.Next(Card.SuitsNumber)).Returns((int)suitA).Returns((int)suitB);
+
+            // when
+            var result = _sut.Play();
+
+            // then
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.PlayerA);
+            Assert.IsNotNull(result.PlayerB);
+            Assert.AreEqual(GameResult.PlayerWins, result.GameResult);
+            Assert.AreEqual(isPlayerAWinner, result.PlayerA.Winner);
+            Assert.AreEqual(!isPlayerAWinner, result.PlayerB.Winner);
         }
     }
 }
