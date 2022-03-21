@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Question1.ConsoleApp", "Que
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Question2.ConsoleApp", "Question2.ConsoleApp\Question2.ConsoleApp.csproj", "{712183FF-DB10-4FF2-9A2A-C6038912C72F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HighCard", "HighCard\HighCard.csproj", "{DB29B0FE-48AF-4525-AA2F-0284ADC02790}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{712183FF-DB10-4FF2-9A2A-C6038912C72F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{712183FF-DB10-4FF2-9A2A-C6038912C72F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{712183FF-DB10-4FF2-9A2A-C6038912C72F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB29B0FE-48AF-4525-AA2F-0284ADC02790}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB29B0FE-48AF-4525-AA2F-0284ADC02790}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB29B0FE-48AF-4525-AA2F-0284ADC02790}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB29B0FE-48AF-4525-AA2F-0284ADC02790}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,6 +52,7 @@ Global
 		{3B114AF5-A61A-4930-9168-112F2947FB3D} = {47D5475C-0316-4509-B7EB-F63A8073BDF6}
 		{5367AA5C-98BE-457C-91AC-957D2F8BC208} = {47D5475C-0316-4509-B7EB-F63A8073BDF6}
 		{712183FF-DB10-4FF2-9A2A-C6038912C72F} = {352AA2C2-B77A-4D43-8FC2-1F2BB1AD88FC}
+		{DB29B0FE-48AF-4525-AA2F-0284ADC02790} = {352AA2C2-B77A-4D43-8FC2-1F2BB1AD88FC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F88F1057-066E-4184-BB68-1D555695CA88}
