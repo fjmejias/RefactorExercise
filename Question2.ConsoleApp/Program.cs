@@ -1,4 +1,7 @@
-﻿using System;
+﻿using HighCard;
+using HighCard.Interfaces;
+using System;
+using Unity;
 
 namespace Question2.ConsoleApp
 {
@@ -6,8 +9,19 @@ namespace Question2.ConsoleApp
     {
         static void Main(string[] args)
         {
-            HighCard card = new HighCard();
+            IHighCard card = RegisterHighCard().Resolve<IHighCard>();
+
             Console.WriteLine(card.Play() ? "win" : "lose");
+        }
+
+        private static IUnityContainer RegisterHighCard()
+        {
+            var container = new UnityContainer();
+
+            container.RegisterType<IRandomGenerator, RandomGenerator>();
+            container.RegisterType<IHighCard, HighCard.HighCard>();
+
+            return container;
         }
     }
 }
