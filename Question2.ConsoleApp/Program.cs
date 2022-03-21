@@ -11,7 +11,7 @@ namespace Question2.ConsoleApp
         {
             IHighCard card = RegisterHighCard().Resolve<IHighCard>();
 
-            Console.WriteLine(card.Play() ? "win" : "lose");
+            Console.WriteLine(card.Play().ToString());
         }
 
         private static IUnityContainer RegisterHighCard()

@@ -1,7 +1,9 @@
-﻿namespace HighCard.Interfaces
+﻿using HighCard.Enums;
+
+namespace HighCard.Interfaces
 {
     public interface IHighCard
     {
-        bool Play();
+        HighCardResult Play();
     }
 }

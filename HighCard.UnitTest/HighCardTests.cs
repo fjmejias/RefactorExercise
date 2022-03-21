@@ -1,4 +1,5 @@
-﻿using HighCard.Interfaces;
+﻿using HighCard.Enums;
+using HighCard.Interfaces;
 using Moq;
 using NUnit.Framework;
 
@@ -18,7 +19,7 @@ namespace HighCard.UnitTest
         }
 
         [Test]
-        public void Given_PlayerA_Less_Than_PlayerB_When_Play_Then_Lose()
+        public void Given_PlayerA_Less_Than_PlayerB_When_Play_Then_Win()
         {
             // given
             _randomGeneratorMock.SetupSequence(r => r.Next()).Returns(1).Returns(10);
@@ -27,11 +28,11 @@ namespace HighCard.UnitTest
             var result = _sut.Play();
 
             // then
-            Assert.AreEqual(true, result);
+            Assert.AreEqual(HighCardResult.Win, result);
         }
 
         [Test]
-        public void Given_PlayerA_Greater_Than_PlayerB_When_Play_Then_Win()
+        public void Given_PlayerA_Greater_Than_PlayerB_When_Play_Then_Lose()
         {
             // given
             _randomGeneratorMock.SetupSequence(r => r.Next()).Returns(10).Returns(1);
@@ -40,7 +41,7 @@ namespace HighCard.UnitTest
             var result = _sut.Play();
 
             // then
-            Assert.AreEqual(false, result);
+            Assert.AreEqual(HighCardResult.Lose, result);
         }
     }
 }
