@@ -26,7 +26,10 @@ namespace HighCard
         {
             var result = HighCardResult.Tie;
 
-            result = playerA < playerB ? HighCardResult.Win : HighCardResult.Lose;
+            if (playerA != playerB)
+            {
+                result = playerA < playerB ? HighCardResult.Win : HighCardResult.Lose;
+            }
 
             return result;
         }

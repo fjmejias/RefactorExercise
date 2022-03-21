@@ -43,5 +43,18 @@ namespace HighCard.UnitTest
             // then
             Assert.AreEqual(HighCardResult.Lose, result);
         }
+
+        [Test]
+        public void Given_PlayerA_Equal_To_PlayerB_When_Play_Then_Tie()
+        {
+            // given
+            _randomGeneratorMock.SetupSequence(r => r.Next()).Returns(4).Returns(4);
+            
+            // when
+            var result = _sut.Play();
+
+            // then
+            Assert.AreEqual(HighCardResult.Tie, result);
+        }
     }
 }
