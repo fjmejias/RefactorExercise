@@ -1,9 +1,9 @@
-﻿using HighCard.Enums;
+﻿using HighCard.Models;
 
 namespace HighCard.Interfaces
 {
     public interface IHighCard
     {
-        HighCardResult Play();
+        Game Play();
     }
 }
