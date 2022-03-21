@@ -1,5 +1,7 @@
-﻿using HighCard.Enums;
+﻿using System;
+using HighCard.Enums;
 using HighCard.Interfaces;
+using HighCard.Models;
 using Moq;
 using NUnit.Framework;
 
@@ -23,6 +25,7 @@ namespace HighCard.UnitTest
         {
             // given
             _randomGeneratorMock.SetupSequence(r => r.Next(It.IsAny<int>())).Returns(10).Returns(1);
+            _randomGeneratorMock.SetupSequence(r => r.Next(Card.SuitsNumber)).Returns((int)Suits.Diamonds).Returns((int)Suits.Spades);
 
             // when
             var result = _sut.Play();
@@ -41,6 +44,7 @@ namespace HighCard.UnitTest
         {
             // given
             _randomGeneratorMock.SetupSequence(r => r.Next(It.IsAny<int>())).Returns(1).Returns(10);
+            _randomGeneratorMock.SetupSequence(r => r.Next(Card.SuitsNumber)).Returns((int)Suits.Hearts).Returns((int)Suits.Clubs);
 
             // when
             var result = _sut.Play();

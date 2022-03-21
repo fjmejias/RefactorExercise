@@ -49,7 +49,8 @@ namespace HighCard
                 Name = name,
                 PlayingCard = new Card
                 {
-                    Number = _randomGenerator.Next(NumCards) + 1
+                    Number = _randomGenerator.Next(NumCards) + 1,
+                    Suit = (Suits)_randomGenerator.Next(Card.SuitsNumber)
                 }
             };
         }
