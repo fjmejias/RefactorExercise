@@ -18,7 +18,7 @@ namespace HighCard.UnitTest
         }
 
         [Test]
-        public void Given_A_Less_Than_B_When_Play_Then_Lose()
+        public void Given_PlayerA_Less_Than_PlayerB_When_Play_Then_Lose()
         {
             // given
             _randomGeneratorMock.SetupSequence(r => r.Next()).Returns(1).Returns(10);
@@ -31,7 +31,7 @@ namespace HighCard.UnitTest
         }
 
         [Test]
-        public void Given_A_Greater_Than_B_When_Play_Then_Win()
+        public void Given_PlayerA_Greater_Than_PlayerB_When_Play_Then_Win()
         {
             // given
             _randomGeneratorMock.SetupSequence(r => r.Next()).Returns(10).Returns(1);

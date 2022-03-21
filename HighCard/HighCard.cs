@@ -14,10 +14,10 @@ namespace HighCard
 
         public bool Play()
         {
-            int a = _randomGenerator.Next() % 52 + 1;
-            int b = _randomGenerator.Next() % 52 + 1;
+            int playerA = _randomGenerator.Next() % 52 + 1;
+            int playerB = _randomGenerator.Next() % 52 + 1;
 
-            return a < b;
+            return playerA < playerB;
         }
     }
 }
