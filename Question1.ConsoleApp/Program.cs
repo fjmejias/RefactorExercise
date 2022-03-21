@@ -3,7 +3,7 @@ using Encoder.Services;
 using System;
 using Unity;
 
-namespace Question1
+namespace Question1.ConsoleApp
 {
     class Program
     {
