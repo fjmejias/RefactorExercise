@@ -1,8 +1,9 @@
-﻿using System;
+﻿using HighCard.Interfaces;
+using System;
 
-namespace Question2
+namespace HighCard
 {
-    public class HighCard
+    public class HighCard : IHighCard
     {
         private readonly Random _rnd;
 
