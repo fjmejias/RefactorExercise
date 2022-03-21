@@ -1,5 +1,6 @@
 ﻿using HighCard.Enums;
 using HighCard.Interfaces;
+using HighCard.Models;
 using System;
 
 namespace HighCard
@@ -14,24 +15,62 @@ namespace HighCard
             _randomGenerator = randomGenerator ?? throw new ArgumentNullException(nameof(randomGenerator));
         }
 
-        public HighCardResult Play()
+        public Game Play()
         {
-            int playerA = _randomGenerator.Next() % NumCards + 1;
-            int playerB = _randomGenerator.Next() % NumCards + 1;
+            var game = CreateNewGame();
 
-            return GetResult(playerA, playerB);
-        }
-
-        private HighCardResult GetResult(int playerA, int playerB)
-        {
-            var result = HighCardResult.Tie;
-
-            if (playerA != playerB)
+            if (CanPlay(game.PlayerA, game.PlayerB))
             {
-                result = playerA < playerB ? HighCardResult.Win : HighCardResult.Lose;
+                RunGame(game);
+            }
+            else
+            {
+                game.GameResult = GameResult.Error;
             }
 
-            return result;
+            return game;
+        }
+
+        private Game CreateNewGame()
+        {
+            return new Game
+            {
+                Date = DateTime.Now,
+                GameResult = GameResult.NotPlayed,
+                PlayerA = CreatePlayer("Player A"),
+                PlayerB = CreatePlayer("Player B")
+            };
+        }
+
+        private Player CreatePlayer(string name)
+        {
+            return new Player
+            {
+                Name = name,
+                PlayingCard = new Card
+                {
+                    Number = _randomGenerator.Next(NumCards) + 1
+                }
+            };
+        }
+
+        public void RunGame(Game game)
+        {
+            game.GameResult = GameResult.Tie;
+            var playerA = game.PlayerA;
+            var playerB = game.PlayerB;
+
+            if (playerA.PlayingCard.Number != playerB.PlayingCard.Number)
+            {
+                game.GameResult = GameResult.PlayerWins;
+                playerA.Victory = playerA.PlayingCard.Number > playerB.PlayingCard.Number;
+                playerB.Victory = playerA.PlayingCard.Number < playerB.PlayingCard.Number;
+            }
+        }
+
+        private bool CanPlay(Player playerA, Player playerB)
+        {
+            return playerA?.PlayingCard != null && playerB?.PlayingCard != null;
         }
     }
 }
