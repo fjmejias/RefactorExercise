@@ -23,10 +23,9 @@ namespace Question2.ConsoleApp
         private static IUnityContainer RegisterHighCard()
         {
             var container = new UnityContainer();
-
             var settings = new HighCardSettings
             {
-                NumCardsPerSuit = 13,
+                NumCardsPerDeck = 52,
                 NumDecks = 3
             };
 

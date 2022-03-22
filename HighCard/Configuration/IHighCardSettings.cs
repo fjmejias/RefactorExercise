@@ -1,6 +1,6 @@
 ﻿namespace HighCard.Configuration
 {
-    public class HighCardSettings : IHighCardSettings
+    public interface IHighCardSettings
     {
         public int NumDecks { get; set; }
         public int NumCardsPerDeck { get; set; }
