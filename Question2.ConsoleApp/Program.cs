@@ -1,5 +1,6 @@
 ﻿using HighCard;
 using HighCard.Configuration;
+using HighCard.Enums;
 using HighCard.Interfaces;
 using HighCard.Models;
 using System;
@@ -11,13 +12,30 @@ namespace Question2.ConsoleApp
     {
         static void Main(string[] args)
         {
-            IHighCard highCardGame = RegisterHighCard().Resolve<IHighCard>();
+            IHighCardGame highCardGame = RegisterHighCard().Resolve<IHighCardGame>();
+            Console.WriteLine($"HIGHCARD Game - Date: {highCardGame.GameDate}\n");
 
-            var game = highCardGame.Play();
-            Console.WriteLine($"HIGHCARD Game - Date: {game.Date}");
-            Console.WriteLine(PrintPlayerCard(game.PlayerA));
-            Console.WriteLine(PrintPlayerCard(game.PlayerB));
-            Console.WriteLine(PrintGameResult(game));
+            Console.WriteLine("Enter first player name...");
+            var firstPlayer = Console.ReadLine();
+            Console.WriteLine("\nEnter second player name...");
+            var secondPlayer = Console.ReadLine();
+            Console.WriteLine();
+
+            highCardGame.AddPlayers(firstPlayer, secondPlayer);
+            highCardGame.Play();
+
+            PrintPlayersData(highCardGame);
+
+            while (highCardGame.GameResult == GameResult.Tie)
+            {
+                Console.WriteLine("Tied game, press any key to draw again both players...");
+                Console.ReadKey();
+                Console.WriteLine();
+
+                highCardGame.Play();
+                PrintPlayersData(highCardGame);
+            }
+            Console.WriteLine(PrintGameResult(highCardGame));
         }
 
         private static IUnityContainer RegisterHighCard()
@@ -31,36 +49,38 @@ namespace Question2.ConsoleApp
 
             container.RegisterInstance<IHighCardSettings>(settings);
             container.RegisterType<ICardSelector, CardSelector>();
-            container.RegisterType<IHighCard, HighCard.HighCard>();
+            container.RegisterType<IHighCardGame, HighCardGame>();
 
             return container;
         }
 
-        private static string PrintPlayerCard(Player player)
+        private static void PrintPlayersData(IHighCardGame game)
         {
-            return$"{player.Name} - Card: {player.PlayingCard.Number} of {player.PlayingCard.Suit}";
+            Console.WriteLine(PrintPlayerCard(game.FirstPlayer));
+            Console.WriteLine(PrintPlayerCard(game.SecondPlayer));
+            Console.WriteLine();
         }
 
-        private static string PrintGameResult(Game game)
+        private static string PrintPlayerCard(Player player)
         {
-            var result = $"{game.GameResult} - {(game.PlayerA.Winner ? game.PlayerA.Name : game.PlayerB.Name)}";
+            return $"{player.Name} - Card: {player.PlayingCard.Number} of {player.PlayingCard.Suit}";
+        }
+
+        private static string PrintGameResult(IHighCardGame game)
+        {
+            var result = string.Empty;
 
             switch (game.GameResult)
             {
-                case HighCard.Enums.GameResult.PlayerWins:
-                    result = $"The winner is: {(game.PlayerA.Winner ? game.PlayerA.Name : game.PlayerB.Name)}";
+                case GameResult.PlayerWins:
+                    result = $"The winner is: {(game.FirstPlayer.Winner ? game.FirstPlayer.Name : game.SecondPlayer.Name)}";
                     break;
-                case HighCard.Enums.GameResult.Tie:
+                case GameResult.Tie:
                     result = "Tied game";
                     break;
-                case HighCard.Enums.GameResult.Error:
+                case GameResult.Error:
                     result = "There was an error";
                     break;
-            }
-
-            if (game.GameResult == HighCard.Enums.GameResult.PlayerWins)
-            {
-                
             }
 
             return result;
