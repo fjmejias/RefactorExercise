@@ -8,7 +8,7 @@ namespace HighCard.UnitTest
 {
     public class HighCardGameTests
     {
-        private IHighCard _sut;
+        private IHighCardGame _sut;
         private Mock<ICardSelector> _cardSelectorMock;
 
         [SetUp]
@@ -26,15 +26,14 @@ namespace HighCard.UnitTest
                 .Returns(GetCard(10, Suits.Clubs)).Returns(GetCard(1, Suits.Hearts));
 
             // when
-            var result = _sut.Play();
+            _sut.Play();
 
             // then
-            Assert.IsNotNull(result);
-            Assert.IsNotNull(result.PlayerA);
-            Assert.IsNotNull(result.PlayerB);
-            Assert.AreEqual(GameResult.PlayerWins, result.GameResult);
-            Assert.IsTrue(result.PlayerA.Winner);
-            Assert.IsFalse(result.PlayerB.Winner);
+            Assert.IsNotNull(_sut.PlayerA);
+            Assert.IsNotNull(_sut.PlayerB);
+            Assert.AreEqual(GameResult.PlayerWins, _sut.GameResult);
+            Assert.IsTrue(_sut.PlayerA.Winner);
+            Assert.IsFalse(_sut.PlayerB.Winner);
         }
 
         [Test]
@@ -45,15 +44,14 @@ namespace HighCard.UnitTest
                 .Returns(GetCard(1, Suits.Clubs)).Returns(GetCard(10, Suits.Hearts));
 
             // when
-            var result = _sut.Play();
+            _sut.Play();
 
             // then
-            Assert.IsNotNull(result);
-            Assert.IsNotNull(result.PlayerA);
-            Assert.IsNotNull(result.PlayerB);
-            Assert.AreEqual(GameResult.PlayerWins, result.GameResult);
-            Assert.IsFalse(result.PlayerA.Winner);
-            Assert.IsTrue(result.PlayerB.Winner);
+            Assert.IsNotNull(_sut.PlayerA);
+            Assert.IsNotNull(_sut.PlayerB);
+            Assert.AreEqual(GameResult.PlayerWins, _sut.GameResult);
+            Assert.IsFalse(_sut.PlayerA.Winner);
+            Assert.IsTrue(_sut.PlayerB.Winner);
         }
 
         [TestCase(Suits.Clubs, Suits.Clubs)]
@@ -67,15 +65,14 @@ namespace HighCard.UnitTest
                 .Returns(GetCard(1, suitA)).Returns(GetCard(1, suitB));
 
             // when
-            var result = _sut.Play();
+            _sut.Play();
 
             // then
-            Assert.IsNotNull(result);
-            Assert.IsNotNull(result.PlayerA);
-            Assert.IsNotNull(result.PlayerB);
-            Assert.AreEqual(GameResult.Tie, result.GameResult);
-            Assert.IsFalse(result.PlayerA.Winner);
-            Assert.IsFalse(result.PlayerB.Winner);
+            Assert.IsNotNull(_sut.PlayerA);
+            Assert.IsNotNull(_sut.PlayerB);
+            Assert.AreEqual(GameResult.Tie, _sut.GameResult);
+            Assert.IsFalse(_sut.PlayerA.Winner);
+            Assert.IsFalse(_sut.PlayerB.Winner);
         }
 
         [TestCase(Suits.Hearts, Suits.Diamonds, true)]
@@ -97,15 +94,15 @@ namespace HighCard.UnitTest
                 .Returns(GetCard(1, suitA)).Returns(GetCard(1, suitB));
 
             // when
-            var result = _sut.Play();
+            _sut.Play();
 
             // then
-            Assert.IsNotNull(result);
-            Assert.IsNotNull(result.PlayerA);
-            Assert.IsNotNull(result.PlayerB);
-            Assert.AreEqual(GameResult.PlayerWins, result.GameResult);
-            Assert.AreEqual(isPlayerAWinner, result.PlayerA.Winner);
-            Assert.AreEqual(!isPlayerAWinner, result.PlayerB.Winner);
+            Assert.IsNotNull(_sut);
+            Assert.IsNotNull(_sut.PlayerA);
+            Assert.IsNotNull(_sut.PlayerB);
+            Assert.AreEqual(GameResult.PlayerWins, _sut.GameResult);
+            Assert.AreEqual(isPlayerAWinner, _sut.PlayerA.Winner);
+            Assert.AreEqual(!isPlayerAWinner, _sut.PlayerB.Winner);
         }
 
         #region private methods

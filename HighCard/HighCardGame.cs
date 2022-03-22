@@ -5,48 +5,40 @@ using System;
 
 namespace HighCard
 {
-    public class HighCardGame : IHighCard
+    public class HighCardGame : IHighCardGame
     {
+        public Player PlayerA { get; private set; }
+        public Player PlayerB { get; private set; }
+        public GameResult GameResult { get; private set; }
+        public DateTime GameDate { get; }
+
         private readonly ICardSelector _cardSelector;
-        private readonly Game _game;
 
         public HighCardGame(ICardSelector cardSelector)
         {
             _cardSelector = cardSelector ?? throw new ArgumentNullException(nameof(cardSelector));
-            _game = CreateNewGame();
+            GameDate = DateTime.Now;
+            GameResult = GameResult.NotPlayed;
+
+            _cardSelector.InitializeCards();
         }
 
-        public Game Play()
+        public void Play()
         {
-            _game.PlayerA = CreatePlayer("Player A");
-            _game.PlayerB = CreatePlayer("Player B");
+            PlayerA = CreatePlayer("Player A");
+            PlayerB = CreatePlayer("Player B");
 
-            if (CanPlay(_game.PlayerA, _game.PlayerB))
+            if (CanPlay(PlayerA, PlayerB))
             {
                 RunGame();
             }
             else
             {
-                _game.GameResult = GameResult.Error;
+                GameResult = GameResult.Error;
             }
-
-            return _game;
         }
 
         #region private methods
-
-        private Game CreateNewGame()
-        {
-            var game = new Game
-            {
-                Date = DateTime.Now,
-                GameResult = GameResult.NotPlayed
-            };
-
-            _cardSelector.InitializeCards();
-
-            return game;
-        }
 
         private Player CreatePlayer(string name)
         {
@@ -59,27 +51,25 @@ namespace HighCard
 
         private void RunGame()
         {
-            _game.GameResult = GameResult.Tie;
-            var playerA = _game.PlayerA;
-            var playerB = _game.PlayerB;
+            GameResult = GameResult.Tie;
 
-            if (playerA.PlayingCard.Number != playerB.PlayingCard.Number)
+            if (PlayerA.PlayingCard.Number != PlayerB.PlayingCard.Number)
             {
-                _game.GameResult = GameResult.PlayerWins;
-                playerA.Winner = playerA.PlayingCard.Number > playerB.PlayingCard.Number;
-                playerB.Winner = playerA.PlayingCard.Number < playerB.PlayingCard.Number;
+                GameResult = GameResult.PlayerWins;
+                PlayerA.Winner = PlayerA.PlayingCard.Number > PlayerB.PlayingCard.Number;
+                PlayerB.Winner = PlayerA.PlayingCard.Number < PlayerB.PlayingCard.Number;
             }
-            else if (playerA.PlayingCard.Suit != playerB.PlayingCard.Suit)
+            else if (PlayerA.PlayingCard.Suit != PlayerB.PlayingCard.Suit)
             {
-                _game.GameResult = GameResult.PlayerWins;
-                playerA.Winner = playerA.PlayingCard.Suit > playerB.PlayingCard.Suit;
-                playerB.Winner = playerA.PlayingCard.Suit < playerB.PlayingCard.Suit;
+                GameResult = GameResult.PlayerWins;
+                PlayerA.Winner = PlayerA.PlayingCard.Suit > PlayerB.PlayingCard.Suit;
+                PlayerB.Winner = PlayerA.PlayingCard.Suit < PlayerB.PlayingCard.Suit;
             }
         }
 
-        private bool CanPlay(Player playerA, Player playerB)
+        private bool CanPlay(Player PlayerA, Player playerB)
         {
-            return playerA?.PlayingCard != null && playerB?.PlayingCard != null;
+            return PlayerA?.PlayingCard != null && playerB?.PlayingCard != null;
         }
 
         #endregion
