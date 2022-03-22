@@ -1,5 +1,4 @@
-﻿using System;
-using HighCard.Enums;
+﻿using HighCard.Enums;
 using HighCard.Interfaces;
 using HighCard.Models;
 using Moq;
@@ -10,22 +9,21 @@ namespace HighCard.UnitTest
     public class HighCardTests
     {
         private IHighCard _sut;
-        private Mock<IRandomGenerator> _randomGeneratorMock;
+        private Mock<ICardSelector> _cardSelectorMock;
 
         [SetUp]
         public void SetupTests()
         {
-            _randomGeneratorMock = new Mock<IRandomGenerator>();
-
-            _sut = new HighCard(_randomGeneratorMock.Object);
+            _cardSelectorMock = new Mock<ICardSelector>();
+            _sut = new HighCard(_cardSelectorMock.Object);
         }
 
         [Test]
         public void Given_PlayerA_Greater_Than_PlayerB_When_Play_Then_PlayerB_Wins()
         {
             // given
-            _randomGeneratorMock.SetupSequence(r => r.Next(It.IsAny<int>())).Returns(10).Returns(1);
-            _randomGeneratorMock.SetupSequence(r => r.Next(Card.SuitsNumber)).Returns((int)Suits.Diamonds).Returns((int)Suits.Spades);
+            _cardSelectorMock.SetupSequence(r => r.DrawCard())
+                .Returns(GetCard(10, Suits.Clubs)).Returns(GetCard(1, Suits.Hearts));
 
             // when
             var result = _sut.Play();
@@ -43,8 +41,8 @@ namespace HighCard.UnitTest
         public void Given_PlayerA_Less_Than_PlayerB_When_Play_Then_PlayerA_Wins()
         {
             // given
-            _randomGeneratorMock.SetupSequence(r => r.Next(It.IsAny<int>())).Returns(1).Returns(10);
-            _randomGeneratorMock.SetupSequence(r => r.Next(Card.SuitsNumber)).Returns((int)Suits.Hearts).Returns((int)Suits.Clubs);
+            _cardSelectorMock.SetupSequence(r => r.DrawCard())
+                .Returns(GetCard(1, Suits.Clubs)).Returns(GetCard(10, Suits.Hearts));
 
             // when
             var result = _sut.Play();
@@ -65,8 +63,8 @@ namespace HighCard.UnitTest
         public void Given_PlayerA_Value_And_Suit_Equal_To_PlayerB_AValue_And_Suit_When_Play_Then_Tie(Suits suitA, Suits suitB)
         {
             // given
-            _randomGeneratorMock.SetupSequence(r => r.Next(It.IsAny<int>())).Returns(4).Returns(4);
-            _randomGeneratorMock.SetupSequence(r => r.Next(Card.SuitsNumber)).Returns((int)suitA).Returns((int)suitB);
+            _cardSelectorMock.SetupSequence(r => r.DrawCard())
+                .Returns(GetCard(1, suitA)).Returns(GetCard(1, suitB));
 
             // when
             var result = _sut.Play();
@@ -95,8 +93,8 @@ namespace HighCard.UnitTest
         public void Given_PlayerA_Value_Equal_To_PlayerB_Value_But_Different_Suit_When_Play_Then_Expected_Winner(Suits suitA, Suits suitB, bool isPlayerAWinner)
         {
             // given
-            _randomGeneratorMock.SetupSequence(r => r.Next(It.IsAny<int>())).Returns(4).Returns(4);
-            _randomGeneratorMock.SetupSequence(r => r.Next(Card.SuitsNumber)).Returns((int)suitA).Returns((int)suitB);
+            _cardSelectorMock.SetupSequence(r => r.DrawCard())
+                .Returns(GetCard(1, suitA)).Returns(GetCard(1, suitB));
 
             // when
             var result = _sut.Play();
@@ -109,5 +107,14 @@ namespace HighCard.UnitTest
             Assert.AreEqual(isPlayerAWinner, result.PlayerA.Winner);
             Assert.AreEqual(!isPlayerAWinner, result.PlayerB.Winner);
         }
+
+        #region private methods
+
+        private Card GetCard(int number, Suits suit)
+        {
+            return new Card { Number = number, Suit = suit };
+        }
+
+        #endregion
     }
 }
