@@ -5,12 +5,12 @@ using System;
 
 namespace HighCard
 {
-    public class HighCard : IHighCard
+    public class HighCardGame : IHighCard
     {
         private readonly ICardSelector _cardSelector;
         private readonly Game _game;
 
-        public HighCard(ICardSelector cardSelector)
+        public HighCardGame(ICardSelector cardSelector)
         {
             _cardSelector = cardSelector ?? throw new ArgumentNullException(nameof(cardSelector));
             _game = CreateNewGame();

@@ -6,7 +6,7 @@ using NUnit.Framework;
 
 namespace HighCard.UnitTest
 {
-    public class HighCardTests
+    public class HighCardGameTests
     {
         private IHighCard _sut;
         private Mock<ICardSelector> _cardSelectorMock;
@@ -15,7 +15,7 @@ namespace HighCard.UnitTest
         public void SetupTests()
         {
             _cardSelectorMock = new Mock<ICardSelector>();
-            _sut = new HighCard(_cardSelectorMock.Object);
+            _sut = new HighCardGame(_cardSelectorMock.Object);
         }
 
         [Test]
