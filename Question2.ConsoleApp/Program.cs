@@ -22,7 +22,7 @@ namespace Question2.ConsoleApp
             Console.WriteLine();
 
             highCardGame.AddPlayers(firstPlayer, secondPlayer);
-            highCardGame.Play();
+            highCardGame.PlayCards();
 
             PrintPlayersData(highCardGame);
 
@@ -32,7 +32,7 @@ namespace Question2.ConsoleApp
                 Console.ReadKey();
                 Console.WriteLine();
 
-                highCardGame.Play();
+                highCardGame.PlayCards();
                 PrintPlayersData(highCardGame);
             }
             Console.WriteLine(PrintGameResult(highCardGame));
@@ -43,8 +43,9 @@ namespace Question2.ConsoleApp
             var container = new UnityContainer();
             var settings = new HighCardSettings
             {
-                NumCardsPerDeck = 52,
-                NumDecks = 3
+                NumCardsPerDeck = 80,
+                NumDecks = 2,
+                EnableJoker = true
             };
 
             container.RegisterInstance<IHighCardSettings>(settings);
