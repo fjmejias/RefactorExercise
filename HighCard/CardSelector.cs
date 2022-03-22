@@ -25,18 +25,16 @@ namespace HighCard
 
         public int InitializeCards()
         {
-            if (_settings.NumCardsPerDeck % SuitsNumber != 0)
+            if (_settings.NumCardsPerSuit == 0)
             {
-                throw new Exception(
-                    $"The Number of Cards per Deck should be divisible by the number of Suits per Deck: {string.Join(", ", Enum.GetNames(typeof(Suits)))}.");
+                throw new Exception($"The Number of Cards should be greater than zero.");
             }
 
-            var numCardPerSuit = _settings.NumCardsPerDeck / SuitsNumber;
             for (int i = 0; i < _settings.NumDecks; i++)
             {
                 foreach (Suits suit in Enum.GetValues(typeof(Suits)))
                 {
-                    _cards.AddRange(CreateCardsBySuit(numCardPerSuit, suit));
+                    _cards.AddRange(CreateCardsBySuit(_settings.NumCardsPerSuit, suit));
                 }
 
                 if (_settings.EnableJoker)

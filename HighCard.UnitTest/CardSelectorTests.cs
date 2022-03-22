@@ -23,10 +23,10 @@ namespace HighCard.UnitTest
         }
 
         [Test]
-        public void Given_NumCardsPerDeck_Not_Divisible_By_SuitsNumber_When_InitializeCards_Then_Raised_Exception()
+        public void Given_Zero_NumCardsPerSuit_By_SuitsNumber_When_InitializeCards_Then_Raised_Exception()
         {
             // given
-            _highCardSettings.SetupGet(s => s.NumCardsPerDeck).Returns(1);
+            _highCardSettings.SetupGet(s => s.NumCardsPerSuit).Returns(0);
 
             // when / then
             var ex = Assert.Throws<Exception>(() => _sut.InitializeCards());
@@ -35,13 +35,13 @@ namespace HighCard.UnitTest
 
         [TestCase(false)]
         [TestCase(true)]
-        public void Given_NumCardsPerDeck_Divisible_By_SuitsNumber_When_InitializeCards_Then_Cards_Initialized(bool isJokerEnabled)
+        public void Given_NonZero_NumCardsPerDeck_When_InitializeCards_Then_Cards_Initialized(bool isJokerEnabled)
         {
             // given
-            _highCardSettings.SetupGet(s => s.NumCardsPerDeck).Returns(NumCardsPerDeck);
+            _highCardSettings.SetupGet(s => s.NumCardsPerSuit).Returns(NumCardsPerDeck);
             _highCardSettings.SetupGet(s => s.NumDecks).Returns(NumDecks);
             _highCardSettings.SetupGet(s => s.EnableJoker).Returns(isJokerEnabled);
-            var expectedNumOfCards = NumCardsPerDeck * NumDecks;
+            var expectedNumOfCards = NumCardsPerDeck * CardSelector.SuitsNumber * NumDecks;
 
             if (isJokerEnabled)
             {
@@ -66,7 +66,7 @@ namespace HighCard.UnitTest
         public void Given_CardsInitialized_When_DrawCard_Then_Returned_Card()
         {
             // given
-            _highCardSettings.SetupGet(s => s.NumCardsPerDeck).Returns(NumCardsPerDeck);
+            _highCardSettings.SetupGet(s => s.NumCardsPerSuit).Returns(NumCardsPerDeck);
             _highCardSettings.SetupGet(s => s.NumDecks).Returns(NumDecks);
             _sut.InitializeCards();
 

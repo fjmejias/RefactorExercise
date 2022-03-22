@@ -43,7 +43,7 @@ namespace Question2.ConsoleApp
             var container = new UnityContainer();
             var settings = new HighCardSettings
             {
-                NumCardsPerDeck = 80,
+                NumCardsPerSuit = 20,
                 NumDecks = 2,
                 EnableJoker = true
             };
