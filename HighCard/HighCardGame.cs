@@ -7,8 +7,8 @@ namespace HighCard
 {
     public class HighCardGame : IHighCardGame
     {
-        public Player PlayerA { get; private set; }
-        public Player PlayerB { get; private set; }
+        public Player FirstPlayer { get; private set; }
+        public Player SecondPlayer { get; private set; }
         public GameResult GameResult { get; private set; }
         public DateTime GameDate { get; }
 
@@ -23,12 +23,18 @@ namespace HighCard
             _cardSelector.InitializeCards();
         }
 
+        public void AddPlayers(string firstPlayerName, string secondPlayerName)
+        {
+            FirstPlayer = new Player { Name = firstPlayerName };
+            SecondPlayer = new Player { Name = secondPlayerName };
+        }
+
         public void Play()
         {
-            PlayerA = CreatePlayer("Player A");
-            PlayerB = CreatePlayer("Player B");
+            DrawPlayerCard(FirstPlayer);
+            DrawPlayerCard(SecondPlayer);
 
-            if (CanPlay(PlayerA, PlayerB))
+            if (CanPlay(FirstPlayer, SecondPlayer))
             {
                 RunGame();
             }
@@ -40,30 +46,31 @@ namespace HighCard
 
         #region private methods
 
-        private Player CreatePlayer(string name)
+        public void DrawPlayerCard(Player player)
         {
-            return new Player
+            if (player == null)
             {
-                Name = name,
-                PlayingCard = _cardSelector.DrawCard()
-            };
+                throw new Exception("The player is not created yet. You must add the players before drawing cards.");
+            }
+
+            player.PlayingCard = _cardSelector.DrawCard();
         }
 
         private void RunGame()
         {
             GameResult = GameResult.Tie;
 
-            if (PlayerA.PlayingCard.Number != PlayerB.PlayingCard.Number)
+            if (FirstPlayer.PlayingCard.Number != SecondPlayer.PlayingCard.Number)
             {
                 GameResult = GameResult.PlayerWins;
-                PlayerA.Winner = PlayerA.PlayingCard.Number > PlayerB.PlayingCard.Number;
-                PlayerB.Winner = PlayerA.PlayingCard.Number < PlayerB.PlayingCard.Number;
+                FirstPlayer.Winner = FirstPlayer.PlayingCard.Number > SecondPlayer.PlayingCard.Number;
+                SecondPlayer.Winner = FirstPlayer.PlayingCard.Number < SecondPlayer.PlayingCard.Number;
             }
-            else if (PlayerA.PlayingCard.Suit != PlayerB.PlayingCard.Suit)
+            else if (FirstPlayer.PlayingCard.Suit != SecondPlayer.PlayingCard.Suit)
             {
                 GameResult = GameResult.PlayerWins;
-                PlayerA.Winner = PlayerA.PlayingCard.Suit > PlayerB.PlayingCard.Suit;
-                PlayerB.Winner = PlayerA.PlayingCard.Suit < PlayerB.PlayingCard.Suit;
+                FirstPlayer.Winner = FirstPlayer.PlayingCard.Suit > SecondPlayer.PlayingCard.Suit;
+                SecondPlayer.Winner = FirstPlayer.PlayingCard.Suit < SecondPlayer.PlayingCard.Suit;
             }
         }
 

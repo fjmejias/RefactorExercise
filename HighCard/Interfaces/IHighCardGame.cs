@@ -5,11 +5,11 @@ namespace HighCard.Interfaces
 {
     public interface IHighCardGame
     {
-        Player PlayerA { get; }
-        Player PlayerB { get; }
+        Player FirstPlayer { get; }
+        Player SecondPlayer { get; }
         GameResult GameResult { get; }
 
+        void AddPlayers(string firstPlayerName, string secondPlayerName);
         void Play();
-
     }
 }

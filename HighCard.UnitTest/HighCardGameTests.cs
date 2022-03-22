@@ -3,6 +3,7 @@ using HighCard.Interfaces;
 using HighCard.Models;
 using Moq;
 using NUnit.Framework;
+using System;
 
 namespace HighCard.UnitTest
 {
@@ -19,21 +20,68 @@ namespace HighCard.UnitTest
         }
 
         [Test]
+        public void Given_PlayerNames_When_AddPlayers_Then_Players_Created()
+        {
+            // given
+            var firstPlayerName = "player 1";
+            var secondPlayerName = "player 2";
+
+            // when
+            _sut.AddPlayers(firstPlayerName, secondPlayerName);
+
+            // then
+            Assert.IsNotNull(_sut.FirstPlayer);
+            Assert.IsNotNull(_sut.SecondPlayer);
+            Assert.AreEqual(firstPlayerName, _sut.FirstPlayer.Name);
+            Assert.AreEqual(secondPlayerName, _sut.SecondPlayer.Name);
+        }
+
+        [Test]
+        public void Given_Not_Existing_Players_When_Play_Then_Raised_Exception()
+        {
+            // given
+            _cardSelectorMock.SetupSequence(r => r.DrawCard())
+                .Returns(GetCard(1, Suits.Clubs)).Returns(GetCard(1, Suits.Hearts));
+
+            // when / then
+            Assert.Throws<Exception>(() => _sut.Play());
+        }
+
+        [Test]
+        public void Given_Existing_Players_When_Play_Then_Players_Have_Card()
+        {
+            // given
+            _sut.AddPlayers("firstPlayerName", "secondPlayerName");
+
+            _cardSelectorMock.SetupSequence(r => r.DrawCard())
+                .Returns(GetCard(1, Suits.Clubs)).Returns(GetCard(1, Suits.Hearts));
+
+            // when
+            _sut.Play();
+
+            // then
+            Assert.IsNotNull(_sut.FirstPlayer.PlayingCard);
+            Assert.IsNotNull(_sut.SecondPlayer.PlayingCard);
+        }
+
+        [Test]
         public void Given_PlayerA_Greater_Than_PlayerB_When_Play_Then_PlayerB_Wins()
         {
             // given
             _cardSelectorMock.SetupSequence(r => r.DrawCard())
                 .Returns(GetCard(10, Suits.Clubs)).Returns(GetCard(1, Suits.Hearts));
 
+            _sut.AddPlayers("firstPlayerName", "secondPlayerName");
+
             // when
             _sut.Play();
 
             // then
-            Assert.IsNotNull(_sut.PlayerA);
-            Assert.IsNotNull(_sut.PlayerB);
+            Assert.IsNotNull(_sut.FirstPlayer);
+            Assert.IsNotNull(_sut.SecondPlayer);
             Assert.AreEqual(GameResult.PlayerWins, _sut.GameResult);
-            Assert.IsTrue(_sut.PlayerA.Winner);
-            Assert.IsFalse(_sut.PlayerB.Winner);
+            Assert.IsTrue(_sut.FirstPlayer.Winner);
+            Assert.IsFalse(_sut.SecondPlayer.Winner);
         }
 
         [Test]
@@ -43,15 +91,17 @@ namespace HighCard.UnitTest
             _cardSelectorMock.SetupSequence(r => r.DrawCard())
                 .Returns(GetCard(1, Suits.Clubs)).Returns(GetCard(10, Suits.Hearts));
 
+            _sut.AddPlayers("firstPlayerName", "secondPlayerName");
+
             // when
             _sut.Play();
 
             // then
-            Assert.IsNotNull(_sut.PlayerA);
-            Assert.IsNotNull(_sut.PlayerB);
+            Assert.IsNotNull(_sut.FirstPlayer);
+            Assert.IsNotNull(_sut.SecondPlayer);
             Assert.AreEqual(GameResult.PlayerWins, _sut.GameResult);
-            Assert.IsFalse(_sut.PlayerA.Winner);
-            Assert.IsTrue(_sut.PlayerB.Winner);
+            Assert.IsFalse(_sut.FirstPlayer.Winner);
+            Assert.IsTrue(_sut.SecondPlayer.Winner);
         }
 
         [TestCase(Suits.Clubs, Suits.Clubs)]
@@ -64,15 +114,17 @@ namespace HighCard.UnitTest
             _cardSelectorMock.SetupSequence(r => r.DrawCard())
                 .Returns(GetCard(1, suitA)).Returns(GetCard(1, suitB));
 
+            _sut.AddPlayers("firstPlayerName", "secondPlayerName");
+
             // when
             _sut.Play();
 
             // then
-            Assert.IsNotNull(_sut.PlayerA);
-            Assert.IsNotNull(_sut.PlayerB);
+            Assert.IsNotNull(_sut.FirstPlayer);
+            Assert.IsNotNull(_sut.SecondPlayer);
             Assert.AreEqual(GameResult.Tie, _sut.GameResult);
-            Assert.IsFalse(_sut.PlayerA.Winner);
-            Assert.IsFalse(_sut.PlayerB.Winner);
+            Assert.IsFalse(_sut.FirstPlayer.Winner);
+            Assert.IsFalse(_sut.SecondPlayer.Winner);
         }
 
         [TestCase(Suits.Hearts, Suits.Diamonds, true)]
@@ -93,16 +145,18 @@ namespace HighCard.UnitTest
             _cardSelectorMock.SetupSequence(r => r.DrawCard())
                 .Returns(GetCard(1, suitA)).Returns(GetCard(1, suitB));
 
+            _sut.AddPlayers("firstPlayerName", "secondPlayerName");
+
             // when
             _sut.Play();
 
             // then
             Assert.IsNotNull(_sut);
-            Assert.IsNotNull(_sut.PlayerA);
-            Assert.IsNotNull(_sut.PlayerB);
+            Assert.IsNotNull(_sut.FirstPlayer);
+            Assert.IsNotNull(_sut.SecondPlayer);
             Assert.AreEqual(GameResult.PlayerWins, _sut.GameResult);
-            Assert.AreEqual(isPlayerAWinner, _sut.PlayerA.Winner);
-            Assert.AreEqual(!isPlayerAWinner, _sut.PlayerB.Winner);
+            Assert.AreEqual(isPlayerAWinner, _sut.FirstPlayer.Winner);
+            Assert.AreEqual(!isPlayerAWinner, _sut.SecondPlayer.Winner);
         }
 
         #region private methods
