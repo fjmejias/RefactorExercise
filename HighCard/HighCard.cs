@@ -43,6 +43,8 @@ namespace HighCard
                 GameResult = GameResult.NotPlayed
             };
 
+            _cardSelector.InitializeCards();
+
             return game;
         }
 

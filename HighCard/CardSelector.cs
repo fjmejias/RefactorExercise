@@ -10,23 +10,48 @@ namespace HighCard
 {
     public class CardSelector : ICardSelector
     {
-        private readonly HighCardSettings _settings;
+        public static int SuitsNumber => Enum.GetNames(typeof(Suits)).Length;
+
+        private readonly IHighCardSettings _settings;
         private readonly Random _rnd;
         private readonly List<Card> _cards;
 
-        public static int SuitsNumber => Enum.GetNames(typeof(Suits)).Length;
-
-        public CardSelector(HighCardSettings settings)
+        public CardSelector(IHighCardSettings settings)
         {
             _settings = settings ?? throw new ArgumentNullException(nameof(settings));
             _rnd = new Random(DateTime.Now.Millisecond);
-            _cards = InitializeCards();
+            _cards = new List<Card>();
+        }
+
+        public int InitializeCards()
+        {
+            if (_settings.NumCardsPerDeck % SuitsNumber != 0)
+            {
+                throw new Exception(
+                    $"The Number of Cards per Deck should be divisible by the number of Suits per Deck: {string.Join(", ", Enum.GetNames(typeof(Suits)))}.");
+            }
+
+            var numCardPerSuit = _settings.NumCardsPerDeck / SuitsNumber;
+            for (int i = 0; i < _settings.NumDecks; i++)
+            {
+                foreach (Suits suit in Enum.GetValues(typeof(Suits)))
+                {
+                    _cards.AddRange(CreateCardsBySuit(numCardPerSuit, suit));
+                }
+            }
+
+            return _cards.Count;
         }
 
         public Card DrawCard()
         {
-            var maxValue = _cards.Count;
-            var card = _cards.ElementAt(_rnd.Next(maxValue));
+            if (!_cards.Any())
+            {
+                throw new Exception($"The cards should be initialized first.");
+            }
+
+            var selected = _rnd.Next(_cards.Count);
+            var card = _cards.ElementAt(selected);
 
             _cards.Remove(card);
 
@@ -34,21 +59,6 @@ namespace HighCard
         }
 
         #region private methods
-
-        private List<Card> InitializeCards()
-        {
-            var cards = new List<Card>();
-            
-            for (int i = 0; i < _settings.NumDecks; i++)
-            {
-                cards.AddRange(CreateCardsBySuit(_settings.NumCardsPerSuit, Suits.Clubs));
-                cards.AddRange(CreateCardsBySuit(_settings.NumCardsPerSuit, Suits.Diamonds));
-                cards.AddRange(CreateCardsBySuit(_settings.NumCardsPerSuit, Suits.Hearts));
-                cards.AddRange(CreateCardsBySuit(_settings.NumCardsPerSuit, Suits.Spades));
-            }
-
-            return cards;
-        }
 
         private IList<Card> CreateCardsBySuit(int num, Suits suit)
         {

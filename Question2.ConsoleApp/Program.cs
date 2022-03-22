@@ -29,7 +29,7 @@ namespace Question2.ConsoleApp
                 NumDecks = 3
             };
 
-            container.RegisterInstance(settings);
+            container.RegisterInstance<IHighCardSettings>(settings);
             container.RegisterType<ICardSelector, CardSelector>();
             container.RegisterType<IHighCard, HighCard.HighCard>();
 
