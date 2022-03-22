@@ -12,6 +12,6 @@ namespace HighCard.Interfaces
         DateTime GameDate { get; }
 
         void AddPlayers(string firstPlayerName, string secondPlayerName);
-        void Play();
+        void PlayCards();
     }
 }

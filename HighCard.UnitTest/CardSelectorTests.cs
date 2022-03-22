@@ -33,18 +33,26 @@ namespace HighCard.UnitTest
             TestContext.Progress.WriteLine(ex.Message);
         }
 
-        [Test]
-        public void Given_NumCardsPerDeck_Divisible_By_SuitsNumber_When_InitializeCards_Then_Cards_Initialized()
+        [TestCase(false)]
+        [TestCase(true)]
+        public void Given_NumCardsPerDeck_Divisible_By_SuitsNumber_When_InitializeCards_Then_Cards_Initialized(bool isJokerEnabled)
         {
             // given
             _highCardSettings.SetupGet(s => s.NumCardsPerDeck).Returns(NumCardsPerDeck);
             _highCardSettings.SetupGet(s => s.NumDecks).Returns(NumDecks);
+            _highCardSettings.SetupGet(s => s.EnableJoker).Returns(isJokerEnabled);
+            var expectedNumOfCards = NumCardsPerDeck * NumDecks;
+
+            if (isJokerEnabled)
+            {
+                expectedNumOfCards += NumDecks;
+            }
 
             // when
             var result = _sut.InitializeCards();
 
             // then
-            Assert.AreEqual(NumCardsPerDeck * NumDecks, result);
+            Assert.AreEqual(expectedNumOfCards, result);
         }
 
         [Test]
@@ -68,6 +76,7 @@ namespace HighCard.UnitTest
             // then
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Number > 0);
+            Assert.IsNotNull(result.Suit);
             Assert.IsTrue(Enum.IsDefined(typeof(Suits), result.Suit));
         }
     }

@@ -38,6 +38,11 @@ namespace HighCard
                 {
                     _cards.AddRange(CreateCardsBySuit(numCardPerSuit, suit));
                 }
+
+                if (_settings.EnableJoker)
+                {
+                    _cards.Add(new Card { IsJoker = true});
+                }
             }
 
             return _cards.Count;
@@ -62,11 +67,12 @@ namespace HighCard
 
         private IList<Card> CreateCardsBySuit(int num, Suits suit)
         {
-            return Enumerable.Range(1, num).Select(n => new Card
-            {
-                Number = n,
-                Suit = suit
-            }).ToList();
+            return Enumerable.Range(1, num).Select(n => GetCard(n, suit)).ToList();
+        }
+
+        private Card GetCard(int num, Suits suit)
+        {
+            return new Card { Number = num, Suit = suit };
         }
 
         #endregion

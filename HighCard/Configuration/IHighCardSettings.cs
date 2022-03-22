@@ -2,7 +2,8 @@
 {
     public interface IHighCardSettings
     {
-        public int NumDecks { get; set; }
-        public int NumCardsPerDeck { get; set; }
+        public int NumDecks { get; }
+        public int NumCardsPerDeck { get; }
+        public bool EnableJoker { get; }
     }
 }

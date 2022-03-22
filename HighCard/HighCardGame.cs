@@ -29,7 +29,7 @@ namespace HighCard
             SecondPlayer = new Player { Name = secondPlayerName };
         }
 
-        public void Play()
+        public void PlayCards()
         {
             DrawPlayerCard(FirstPlayer);
             DrawPlayerCard(SecondPlayer);
@@ -58,19 +58,30 @@ namespace HighCard
 
         private void RunGame()
         {
-            GameResult = GameResult.Tie;
+            GameResult = GameResult.PlayerWins;
+            FirstPlayer.Winner = FirstPlayer.PlayingCard.IsJoker;
+            SecondPlayer.Winner = SecondPlayer.PlayingCard.IsJoker;
 
-            if (FirstPlayer.PlayingCard.Number != SecondPlayer.PlayingCard.Number)
+            if (FirstPlayer.Winner && SecondPlayer.Winner)
             {
-                GameResult = GameResult.PlayerWins;
-                FirstPlayer.Winner = FirstPlayer.PlayingCard.Number > SecondPlayer.PlayingCard.Number;
-                SecondPlayer.Winner = FirstPlayer.PlayingCard.Number < SecondPlayer.PlayingCard.Number;
+                GameResult = GameResult.Tie;
             }
-            else if (FirstPlayer.PlayingCard.Suit != SecondPlayer.PlayingCard.Suit)
+            else if (!FirstPlayer.Winner && !SecondPlayer.Winner)
             {
-                GameResult = GameResult.PlayerWins;
-                FirstPlayer.Winner = FirstPlayer.PlayingCard.Suit > SecondPlayer.PlayingCard.Suit;
-                SecondPlayer.Winner = FirstPlayer.PlayingCard.Suit < SecondPlayer.PlayingCard.Suit;
+                if (FirstPlayer.PlayingCard.Number != SecondPlayer.PlayingCard.Number)
+                {
+                    FirstPlayer.Winner = FirstPlayer.PlayingCard.Number > SecondPlayer.PlayingCard.Number;
+                    SecondPlayer.Winner = FirstPlayer.PlayingCard.Number < SecondPlayer.PlayingCard.Number;
+                }
+                else if (FirstPlayer.PlayingCard.Suit != SecondPlayer.PlayingCard.Suit)
+                {
+                    FirstPlayer.Winner = FirstPlayer.PlayingCard.Suit > SecondPlayer.PlayingCard.Suit;
+                    SecondPlayer.Winner = FirstPlayer.PlayingCard.Suit < SecondPlayer.PlayingCard.Suit;
+                }
+                else
+                {
+                    GameResult = GameResult.Tie;
+                }
             }
         }
 
