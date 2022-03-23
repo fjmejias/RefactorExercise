@@ -1,6 +1,6 @@
-﻿using HighCard.Models;
+﻿using HighCard.Contracts.Models;
 
-namespace HighCard.Interfaces
+namespace HighCard.Contracts.Interfaces
 {
     public interface ICardSelector
     {

@@ -1,6 +1,6 @@
-﻿using HighCard.Enums;
+﻿using HighCard.Contracts.Enums;
 
-namespace HighCard.Models
+namespace HighCard.Contracts.Models
 {
     public class Card
     {

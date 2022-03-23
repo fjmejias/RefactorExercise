@@ -1,10 +1,10 @@
-﻿using HighCard.Enums;
-using HighCard.Models;
+﻿using HighCard.Contracts.Enums;
+using HighCard.Contracts.Models;
 using System;
 
-namespace HighCard.Interfaces
+namespace HighCard.Contracts.Interfaces
 {
-    public interface IHighCardGame
+    public interface ICardGame
     {
         Player FirstPlayer { get; }
         Player SecondPlayer { get; }

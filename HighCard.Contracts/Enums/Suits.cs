@@ -1,4 +1,4 @@
-﻿namespace HighCard.Enums
+﻿namespace HighCard.Contracts.Enums
 {
     public enum Suits
     {

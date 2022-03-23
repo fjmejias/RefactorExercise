@@ -1,8 +1,9 @@
 ﻿using HighCard;
-using HighCard.Configuration;
-using HighCard.Enums;
-using HighCard.Interfaces;
-using HighCard.Models;
+using HighCard.Contracts.Configuration;
+using HighCard.Contracts.Enums;
+using HighCard.Contracts.Interfaces;
+using HighCard.Contracts.Models;
+using Question2.ConsoleApp.Configuration;
 using System;
 using Unity;
 
@@ -10,7 +11,7 @@ namespace Question2.ConsoleApp
 {
     class Program
     {
-        private static readonly IHighCardSettings Settings = new HighCardSettings
+        private static readonly ICardGameSettings Settings = new HighCardSettings
         {
             NumCardsPerSuit = 20,
             NumDecks = 2,

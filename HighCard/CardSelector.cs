@@ -1,7 +1,7 @@
-﻿using HighCard.Configuration;
-using HighCard.Enums;
-using HighCard.Interfaces;
-using HighCard.Models;
+﻿using HighCard.Contracts.Configuration;
+using HighCard.Contracts.Enums;
+using HighCard.Contracts.Interfaces;
+using HighCard.Contracts.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,11 +12,11 @@ namespace HighCard
     {
         public static int SuitsNumber => Enum.GetNames(typeof(Suits)).Length;
 
-        private readonly IHighCardSettings _settings;
+        private readonly ICardGameSettings _settings;
         private readonly Random _rnd;
         private readonly List<Card> _cards;
 
-        public CardSelector(IHighCardSettings settings)
+        public CardSelector(ICardGameSettings settings)
         {
             _settings = settings ?? throw new ArgumentNullException(nameof(settings));
             _rnd = new Random(DateTime.Now.Millisecond);
@@ -39,7 +39,7 @@ namespace HighCard
 
                 if (_settings.EnableJoker)
                 {
-                    _cards.Add(new Card { IsJoker = true});
+                    _cards.Add(new Card { IsJoker = true });
                 }
             }
 

@@ -1,6 +1,6 @@
-﻿using HighCard.Enums;
-using HighCard.Interfaces;
-using HighCard.Models;
+﻿using HighCard.Contracts.Enums;
+using HighCard.Contracts.Interfaces;
+using HighCard.Contracts.Models;
 using Moq;
 using NUnit.Framework;
 using System;

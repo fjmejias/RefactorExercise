@@ -1,6 +1,6 @@
-﻿using HighCard.Configuration;
-using HighCard.Enums;
-using HighCard.Interfaces;
+﻿using HighCard.Contracts.Configuration;
+using HighCard.Contracts.Enums;
+using HighCard.Contracts.Interfaces;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -10,7 +10,7 @@ namespace HighCard.UnitTest
     public class CardSelectorTests
     {
         private ICardSelector _sut;
-        private Mock<IHighCardSettings> _highCardSettings;
+        private Mock<ICardGameSettings> _highCardSettings;
 
         private const int NumCardsPerDeck = 40;
         private const int NumDecks = 2;
@@ -18,7 +18,7 @@ namespace HighCard.UnitTest
         [SetUp]
         public void SetupTests()
         {
-            _highCardSettings = new Mock<IHighCardSettings>();
+            _highCardSettings = new Mock<ICardGameSettings>();
             _sut = new CardSelector(_highCardSettings.Object);
         }
 

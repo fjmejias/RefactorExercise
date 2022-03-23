@@ -1,4 +1,4 @@
-﻿namespace HighCard.Models
+﻿namespace HighCard.Contracts.Models
 {
     public class Player
     {

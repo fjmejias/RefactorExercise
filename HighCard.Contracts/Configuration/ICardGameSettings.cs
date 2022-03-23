@@ -1,6 +1,6 @@
-﻿namespace HighCard.Configuration
+﻿namespace HighCard.Contracts.Configuration
 {
-    public interface IHighCardSettings
+    public interface ICardGameSettings
     {
         public int NumDecks { get; }
         public int NumCardsPerSuit { get; }
