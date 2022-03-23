@@ -1,6 +1,7 @@
 ﻿using HighCard.Contracts.Configuration;
 using HighCard.Contracts.Enums;
 using HighCard.Contracts.Interfaces;
+using HighCard.Contracts.Models;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -41,7 +42,7 @@ namespace HighCard.UnitTest
             _highCardSettings.SetupGet(s => s.NumCardsPerSuit).Returns(NumCardsPerDeck);
             _highCardSettings.SetupGet(s => s.NumDecks).Returns(NumDecks);
             _highCardSettings.SetupGet(s => s.EnableJoker).Returns(isJokerEnabled);
-            var expectedNumOfCards = NumCardsPerDeck * CardSelector.SuitsNumber * NumDecks;
+            var expectedNumOfCards = NumCardsPerDeck * Card.SuitsNumber * NumDecks;
 
             if (isJokerEnabled)
             {

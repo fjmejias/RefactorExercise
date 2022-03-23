@@ -10,8 +10,6 @@ namespace HighCard
 {
     public class CardSelector : ICardSelector
     {
-        public static int SuitsNumber => Enum.GetNames(typeof(Suits)).Length;
-
         private readonly ICardGameSettings _settings;
         private readonly Random _rnd;
         private readonly List<Card> _cards;
