@@ -19,7 +19,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HighCard", "HighCard\HighCa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HighCard.UnitTest", "HighCard.UnitTest\HighCard.UnitTest.csproj", "{6B254A67-E10A-47BE-947C-34C7AE3E17A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HighCard.Contracts", "HighCard.Contracts\HighCard.Contracts.csproj", "{96675E03-2C44-4199-B371-A51BF78B7B35}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HighCard.Contracts", "HighCard.Contracts\HighCard.Contracts.csproj", "{96675E03-2C44-4199-B371-A51BF78B7B35}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{61A147BE-4D2B-44A9-8665-B61CD2ECE158}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
