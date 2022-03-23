@@ -9,7 +9,7 @@ namespace HighCard.UnitTest
 {
     public class HighCardGameTests
     {
-        private IHighCardGame _sut;
+        private ICardGame _sut;
         private Mock<ICardSelector> _cardSelectorMock;
 
         [SetUp]
@@ -171,7 +171,7 @@ namespace HighCard.UnitTest
 
             // when
             _sut.PlayCards();
-            
+
             // then
             Assert.IsNotNull(_sut.FirstPlayer);
             Assert.IsNotNull(_sut.SecondPlayer);
@@ -191,7 +191,7 @@ namespace HighCard.UnitTest
 
             // when
             _sut.PlayCards();
-            
+
             // then
             Assert.IsNotNull(_sut.FirstPlayer);
             Assert.IsNotNull(_sut.SecondPlayer);

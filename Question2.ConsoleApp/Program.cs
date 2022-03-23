@@ -19,10 +19,10 @@ namespace Question2.ConsoleApp
 
         static void Main(string[] args)
         {
-            IHighCardGame highCardGame = RegisterHighCard().Resolve<IHighCardGame>();
+            ICardGame highCardGame = RegisterHighCard().Resolve<ICardGame>();
             Console.WriteLine($"HIGHCARD Game - Date: {highCardGame.GameDate}\n");
             Console.Write($"Number of Cards per Suit: {Settings.NumCardsPerSuit}" +
-                          $"{(Settings.EnableJoker ? " + one Joker":string.Empty)}\n");
+                          $"{(Settings.EnableJoker ? " + one Joker" : string.Empty)}\n");
             Console.Write($"Number of Decks: {Settings.NumDecks}\n");
 
             Console.WriteLine("\nEnter first player name...");
@@ -53,12 +53,12 @@ namespace Question2.ConsoleApp
             var container = new UnityContainer();
             container.RegisterInstance(Settings);
             container.RegisterType<ICardSelector, CardSelector>();
-            container.RegisterType<IHighCardGame, HighCardGame>();
+            container.RegisterType<ICardGame, HighCardGame>();
 
             return container;
         }
 
-        private static void PrintPlayersData(IHighCardGame game)
+        private static void PrintPlayersData(ICardGame game)
         {
             Console.WriteLine(PrintPlayerCard(game.FirstPlayer));
             Console.WriteLine(PrintPlayerCard(game.SecondPlayer));
@@ -70,7 +70,7 @@ namespace Question2.ConsoleApp
             return $"{player.Name} - Card: {player.PlayingCard.Number} of {player.PlayingCard.Suit}";
         }
 
-        private static string PrintGameResult(IHighCardGame game)
+        private static string PrintGameResult(ICardGame game)
         {
             var result = string.Empty;
 
