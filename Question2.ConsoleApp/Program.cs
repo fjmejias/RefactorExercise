@@ -11,20 +11,16 @@ namespace Question2.ConsoleApp
 {
     class Program
     {
-        private static readonly ICardGameSettings Settings = new HighCardSettings
-        {
-            NumCardsPerSuit = 20,
-            NumDecks = 2,
-            EnableJoker = true
-        };
-
         static void Main(string[] args)
         {
-            ICardGame highCardGame = RegisterHighCard().Resolve<ICardGame>();
+            var container = RegisterHighCard();
+            ICardGame highCardGame = container.Resolve<ICardGame>();
+            ICardGameSettings settings = container.Resolve<ICardGameSettings>();
+
             Console.WriteLine($"HIGHCARD Game - Date: {highCardGame.GameDate}\n");
-            Console.Write($"Number of Cards per Suit: {Settings.NumCardsPerSuit}" +
-                          $"{(Settings.EnableJoker ? " + one Joker" : string.Empty)}\n");
-            Console.Write($"Number of Decks: {Settings.NumDecks}\n");
+            Console.Write($"Number of Cards per Suit: {settings.NumCardsPerSuit}" +
+                          $"{(settings.EnableJoker ? " + one Joker" : string.Empty)}\n");
+            Console.Write($"Number of Decks: {settings.NumDecks}\n");
 
             Console.WriteLine("\nEnter first player name...");
             var firstPlayer = Console.ReadLine();
@@ -52,7 +48,7 @@ namespace Question2.ConsoleApp
         private static IUnityContainer RegisterHighCard()
         {
             var container = new UnityContainer();
-            container.RegisterInstance(Settings);
+            container.RegisterSingleton<ICardGameSettings, HighCardSettings>();
             container.RegisterType<ICardSelector, CardSelector>();
             container.RegisterType<ICardGame, HighCardGame>();
 

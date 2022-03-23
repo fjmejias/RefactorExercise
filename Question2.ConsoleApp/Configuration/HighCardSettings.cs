@@ -4,8 +4,9 @@ namespace Question2.ConsoleApp.Configuration
 {
     public class HighCardSettings : ICardGameSettings
     {
-        public int NumDecks { get; set; }
-        public int NumCardsPerSuit { get; set; }
-        public bool EnableJoker { get; set; }
+        // These settings can be updated from a config json file
+        public int NumDecks => 2;
+        public int NumCardsPerSuit => 20;
+        public bool EnableJoker => true;
     }
 }
